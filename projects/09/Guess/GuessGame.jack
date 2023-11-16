@@ -1,0 +1,70 @@
+/**
+ * Implements the GuessGame.
+ * A friend enters a number for you to guess.
+ * Clears the screen and starts asking you for what number they entered.
+ * You get three tries.
+ */
+
+class GuessGame {
+    field int number;
+    field int numberOfTries;
+
+    constructor GuessGame new() {
+        let number = 0;
+        let number = Keyboard.readInt("Enter a number between 1 and 100 (which your friend can guess): ");
+        let numberOfTries = 3;
+        do Screen.clearScreen();
+        return this;
+    }
+
+    method void displayGameStatus() {
+        do Output.printString("Guess the number between 1 and 100 (your friend entered): ");
+        do Output.println();
+        return;
+    }
+
+    method int makeGuess() {
+        var int userInput;
+        let userInput = Keyboard.readInt("Input your guess: ");
+        do Output.println();
+        return userInput;
+    }
+
+    method boolean endGame(int guess) {
+        return guess = number | numberOfTries = 0;
+    }
+
+    method void play() {
+        var int userInput;
+        var boolean won;
+        let won = false;
+
+        while (~(won) & ~(endGame(userInput))) {
+            do displayGameStatus();
+            let userInput = makeGuess();
+            let numberOfTries = numberOfTries - 1;
+
+            if (userInput = number) {
+                do Output.println();
+                do Output.printString("Congratulations! You guessed the correct number.");
+                do Output.println();
+                let won = true;
+            } else {
+                do Output.printString("Incorrect guess. Try again!");
+                do Output.println();
+            }
+        }
+
+        if (won) {
+            do Output.printString("Winner!");
+            do Output.println();
+        } else {
+            do Output.printString("Sorry, you lost. The correct number was ");
+            do Output.printInt(number);
+            do Output.printString(".");
+            do Output.println();
+        }
+        return;
+    }
+
+}
